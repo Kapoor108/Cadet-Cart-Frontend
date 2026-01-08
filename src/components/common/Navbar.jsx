@@ -17,12 +17,12 @@ const Navbar = () => {
     <nav className="bg-primary-500 text-white shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          <Link to="/" className="flex items-center space-x-3">
-            <span className="text-2xl font-bold">
+          <Link to="/" className="flex items-center space-x-2 sm:space-x-3">
+            <span className="text-xl sm:text-2xl font-bold">
               <span className="text-secondary-500">Cadet</span>
               <span className="text-white">Cart</span>
             </span>
-            <div className="hidden sm:block bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+            <div className="hidden lg:block bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">
               🚚 FREE DELIVERY
             </div>
           </Link>
