@@ -4,6 +4,7 @@ import { useAuth } from './hooks/useAuth';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import LoadingSpinner from './components/common/LoadingSpinner';
+import ErrorBoundary from './components/common/ErrorBoundary';
 
 // Lazy load pages
 const Home = lazy(() => import('./pages/Home'));
@@ -14,6 +15,7 @@ const Contact = lazy(() => import('./pages/Contact'));
 const Admin = lazy(() => import('./pages/Admin'));
 const Login = lazy(() => import('./components/auth/Login'));
 const Register = lazy(() => import('./components/auth/Register'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Protected Route wrapper
 const ProtectedRoute = ({ children, adminOnly = false }) => {
@@ -28,35 +30,38 @@ const ProtectedRoute = ({ children, adminOnly = false }) => {
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <main className="flex-grow">
-        <Suspense fallback={<LoadingSpinner />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/shop" element={
-              <ProtectedRoute><Shop /></ProtectedRoute>
-            } />
-            <Route path="/my-orders" element={
-              <ProtectedRoute><MyOrders /></ProtectedRoute>
-            } />
-            <Route path="/profile" element={
-              <ProtectedRoute><Profile /></ProtectedRoute>
-            } />
-            <Route path="/contact" element={
-              <ProtectedRoute><Contact /></ProtectedRoute>
-            } />
-            <Route path="/admin/*" element={
-              <ProtectedRoute adminOnly><Admin /></ProtectedRoute>
-            } />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </Suspense>
-      </main>
-      <Footer />
-    </div>
+    <ErrorBoundary>
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <main className="flex-grow">
+          <Suspense fallback={<LoadingSpinner />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/shop" element={
+                <ProtectedRoute><Shop /></ProtectedRoute>
+              } />
+              <Route path="/my-orders" element={
+                <ProtectedRoute><MyOrders /></ProtectedRoute>
+              } />
+              <Route path="/profile" element={
+                <ProtectedRoute><Profile /></ProtectedRoute>
+              } />
+              <Route path="/contact" element={
+                <ProtectedRoute><Contact /></ProtectedRoute>
+              } />
+              <Route path="/admin/*" element={
+                <ProtectedRoute adminOnly><Admin /></ProtectedRoute>
+              } />
+              <Route path="/404" element={<NotFound />} />
+              <Route path="*" element={<Navigate to="/404" replace />} />
+            </Routes>
+          </Suspense>
+        </main>
+        <Footer />
+      </div>
+    </ErrorBoundary>
   );
 }
 
